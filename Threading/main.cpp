@@ -15,7 +15,7 @@ auto get_tick_count()
 
 #define TEST 1
 
-int main(void)
+void test_thread_pool()
 {
 	long long pool_time = 0ll, thrd_time = 0ll;
 	std::function<void(int)> f = [](int i)
@@ -27,7 +27,7 @@ int main(void)
 	};
 
 #if TEST
-				
+
 	{
 		auto beg = 0ll;
 
@@ -73,5 +73,59 @@ int main(void)
 	std::cout << "thread_pool: " << pool_time << std::endl;
 	std::cout << "thread: " << thrd_time << std::endl;
 
+}
+
+#include "semaphore.hpp"
+
+void test_semaphore()
+{
+	timothy::semaphore sem{ 5, 5 };
+	timothy::thread_pool tp{ 20 };
+
+	for (int i = 0; i < 2; ++i)
+	{
+		tp.emplace
+		(
+			[&sem]
+			{
+				for (int i = 0; i < 100; ++i)
+				{
+					try
+					{
+						sem.release_one();
+						std::cout << "produce: " << sem.count() << std::endl;
+					}
+					catch (...) {}
+					sleep_milliseconds(50);
+				}
+			}
+			);
+	}
+
+	for (int i = 0; i < 1; ++i)
+	{
+		tp.emplace
+		(
+			[&sem]
+			{
+				for (int i = 0; i < 100; ++i)
+				{
+					try
+					{
+						sem.wait_one();
+						std::cout << "consume: " << sem.count() << std::endl;
+					}
+					catch (...) {}
+					sleep_milliseconds(50);
+				}
+			}
+			);
+	}
+
+}
+
+int main(void)
+{
+	
 	return 0;
 }

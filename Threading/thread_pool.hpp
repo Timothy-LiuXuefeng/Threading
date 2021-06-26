@@ -23,7 +23,7 @@ private:
 public:
 	using size_type = typename container_type::size_type;
 
-	thread_pool(size_type thread_size) : _thrds{ thread_size }
+	explicit thread_pool(size_type thread_size) : _thrds{ thread_size }
 	{
 		for (auto&& ptr : _thrds)
 		{
@@ -31,8 +31,10 @@ public:
 		}
 	}
 
-	template <typename _Ret, typename... _Args>
-	void emplace(std::function<_Ret(_Args...)> func, _Args... args)
+	thread_pool(const thread_pool&) = delete;
+
+	template <typename _Func, typename... _Args>
+	void emplace(_Func func, _Args... args)
 	{
 		std::unique_lock<std::mutex> lg{ _mtx };
 		_q.emplace([func, args...]{ func(args...); });

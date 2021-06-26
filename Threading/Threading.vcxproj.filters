@@ -27,6 +27,9 @@
     <ClInclude Include="concurrent\concurrent_queue.hpp">
       <Filter>Header Files\concurrent</Filter>
     </ClInclude>
+    <ClInclude Include="semaphore.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
