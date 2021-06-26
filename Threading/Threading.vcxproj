@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="concurrent\concurrent_queue.hpp" />
+    <ClInclude Include="semaphore.hpp" />
     <ClInclude Include="thread_pool.hpp" />
     <ClInclude Include="timothy.h" />
   </ItemGroup>

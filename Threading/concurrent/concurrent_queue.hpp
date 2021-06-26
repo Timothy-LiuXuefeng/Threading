@@ -20,6 +20,9 @@ public:
 	using elem_type = Elem_type;
 	using size_type = typename std::queue<elem_type>::size_type;
 
+	concurrent_queue() = default;
+	concurrent_queue(const concurrent_queue&) = delete;
+
 	template <typename... Ts>
 	void emplace(Ts... args)
 	{
