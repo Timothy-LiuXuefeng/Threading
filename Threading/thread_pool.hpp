@@ -11,6 +11,7 @@
 #include <vector>
 #include <condition_variable>
 #include <atomic>
+#include <timothy.h>
 
 TIMOTHY_NAMESPACE_BEGIN
 
